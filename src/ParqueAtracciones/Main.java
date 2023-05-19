@@ -1,3 +1,4 @@
+package ParqueAtracciones;
 
 public class Main {
 
