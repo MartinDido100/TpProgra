@@ -1,3 +1,3 @@
-[Atr1,Atr2]|"Nombre paquete"|Absoluta|50
-[Atr7,Atr2,Atr6]|"Nombre paquete"|AxB|"Atr8"
-[Atr1,Atr2]|"Nombre paquete"|Porcentual|57
+Atr1;Atr2|"Nombre paquete"|ABSOLUTA|50
+Atr7;Atr2;Atr6|"Nombre paquete"|AXB|"Atr8"
+Atr1;Atr2|"Nombre paquete"|PORCENTUAL|57

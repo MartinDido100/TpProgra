@@ -1,5 +1,9 @@
 package ParqueAtracciones;
 
-public class PromocionPorcentual {
+public class PromocionPorcentual extends Promocion{
+
+	public PromocionPorcentual(int desc) {
+		super(desc);
+	}
 
 }

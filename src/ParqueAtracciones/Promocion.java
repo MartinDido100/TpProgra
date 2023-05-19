@@ -4,9 +4,9 @@ public abstract class Promocion {
 	private int descuento;
 	private int original;
 	
-	public Promocion(int desc) {
+	public Promocion(int desc,int original) {
 		this.descuento = desc;
-		this.original = 0;
+		this.original = original;
 	}
 
 //	private int calcularDescuento() {

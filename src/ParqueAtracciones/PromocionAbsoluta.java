@@ -1,5 +1,5 @@
 package ParqueAtracciones;
 
-public class PromocionAbsoluta {
+public class PromocionAbsoluta extends Promocion{
 
 }
