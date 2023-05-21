@@ -1,4 +1,4 @@
-package ParqueAtracciones;
+package ParqueAtracciones.Enums;
 
 public enum TipoPromocion {
 	PORCENTUAL,
