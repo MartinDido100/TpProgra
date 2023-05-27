@@ -4,11 +4,12 @@ public class PromocionAbsoluta extends Promocion{
 	private double precioAbsoluto;
 	
 	public PromocionAbsoluta(double precioOriginal,double precioFinal){
-		super(precioOriginal,precioFinal);
+		super(precioOriginal);
 		this.precioAbsoluto = precioFinal;
 	}
 
-	public double getPrecioAbsoluto() {
-		return precioAbsoluto;
+	@Override
+	public double getPrecioFinal() {
+		return this.precioAbsoluto;
 	}
 }

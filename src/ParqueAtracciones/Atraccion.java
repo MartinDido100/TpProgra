@@ -5,7 +5,7 @@ import ParqueAtracciones.Enums.TipoAtraccion;
 public class Atraccion {
 	private String nombre;
 	private double duracion;
-	private int cantVisitantes;
+	private int cupos;
 	private double precio;
 	private TipoAtraccion tipo;
 	
@@ -17,20 +17,29 @@ public class Atraccion {
 		return duracion;
 	}
 
-	public int getCantVisitantes() {
-		return cantVisitantes;
+	public int getCupos() {
+		return cupos;
 	}
 
 	public TipoAtraccion getTipo() {
 		return tipo;
 	}
 
+	public void reducirCupos(){
+		this.cupos--;
+	}
+	
 	public Atraccion(String nombre, double duracion, int cantVisitantes, double precio, TipoAtraccion tipo) {
 		this.nombre = nombre;
 		this.duracion = duracion;
-		this.cantVisitantes = cantVisitantes;
+		this.cupos = cantVisitantes;
 		this.precio = precio;
 		this.tipo = tipo;
+	}
+
+	@Override
+	public String toString() {
+		return "[" + nombre + "]";
 	}
 
 	public double getPrecio() {

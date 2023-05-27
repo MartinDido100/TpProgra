@@ -4,12 +4,13 @@ public class PromocionPorcentual extends Promocion{
 	private double porcentajeDto;
 	
 	public PromocionPorcentual(double porcentajeDto,double precioOriginal) {
-		super(precioOriginal,precioOriginal - (precioOriginal*porcentajeDto));
+		super(precioOriginal);
 		this.porcentajeDto = porcentajeDto;
 	}
 
-	public double getPorcentajeDto() {
-		return porcentajeDto;
+	@Override
+	public double getPrecioFinal() {
+		return this.precioOriginal - (this.precioOriginal*porcentajeDto);
 	}
 
 }

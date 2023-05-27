@@ -1,20 +1,11 @@
 package ParqueAtracciones.Promociones;
 
 public abstract class Promocion {
-	private double precioFinal; //Precio final
-	private double precioOriginal;
+	protected double precioOriginal;
 	
-	public Promocion(double precioFinal,double original) {
-		this.precioFinal = precioFinal;
+	public Promocion(double original) {
 		this.precioOriginal = original;
 	}
 
-	public double getPrecioFinal() {
-		return precioFinal;
-	}
-
-	public double getPrecioOriginal() {
-		return precioOriginal;
-	}
-	
+	public abstract double getPrecioFinal();
 }
