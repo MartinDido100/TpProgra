@@ -1,10 +1,10 @@
-package ParqueAtracciones;
+package RecepcionParque;
 
 
 import java.util.ArrayList;
 
-import ParqueAtracciones.Enums.TipoAtraccion;
-import ParqueAtracciones.Promociones.Promocion;
+import RecepcionParque.Enums.TipoAtraccion;
+import RecepcionParque.Promociones.Promocion;
 
 public class Paquete implements Comparable<Paquete>{
 	private String nombre;

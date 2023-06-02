@@ -1,10 +1,9 @@
-package ParqueAtracciones;
+package RecepcionParque;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
-
-import ParqueAtracciones.Promociones.PromocionAxB;
+import RecepcionParque.Promociones.PromocionAxB;
 
 public class Recepcion {
 

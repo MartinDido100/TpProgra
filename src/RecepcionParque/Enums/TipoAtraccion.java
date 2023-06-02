@@ -1,4 +1,4 @@
-package ParqueAtracciones.Enums;
+package RecepcionParque.Enums;
 
 public enum TipoAtraccion {
 	AVENTURA, //Montañas rusas, casas de terror, etc

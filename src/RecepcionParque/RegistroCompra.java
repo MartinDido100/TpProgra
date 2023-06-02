@@ -1,4 +1,4 @@
-package ParqueAtracciones;
+package RecepcionParque;
 
 import java.util.ArrayList;
 

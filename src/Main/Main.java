@@ -2,7 +2,7 @@ package Main;
 
 import java.util.ArrayList;
 
-import ParqueAtracciones.*;
+import RecepcionParque.*;
 
 public class Main {
 

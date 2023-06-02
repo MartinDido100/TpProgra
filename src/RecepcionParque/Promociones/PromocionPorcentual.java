@@ -1,4 +1,4 @@
-package ParqueAtracciones.Promociones;
+package RecepcionParque.Promociones;
 
 public class PromocionPorcentual extends Promocion{
 	private double porcentajeDto;

@@ -1,6 +1,6 @@
-package ParqueAtracciones;
+package RecepcionParque;
 
-import ParqueAtracciones.Enums.TipoAtraccion;
+import RecepcionParque.Enums.TipoAtraccion;
 
 public class Atraccion implements Comparable<Atraccion>{
 	private String nombre;

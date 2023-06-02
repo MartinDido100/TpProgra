@@ -1,6 +1,6 @@
-package ParqueAtracciones.Promociones;
+package RecepcionParque.Promociones;
 
-import ParqueAtracciones.Atraccion;
+import RecepcionParque.Atraccion;
 
 public class PromocionAxB extends Promocion{
 	private Atraccion atraccion;

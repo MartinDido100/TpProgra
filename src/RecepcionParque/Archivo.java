@@ -1,4 +1,4 @@
-package ParqueAtracciones;
+package RecepcionParque;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
 
-import ParqueAtracciones.Enums.TipoAtraccion;
-import ParqueAtracciones.Enums.TipoPromocion;
-import ParqueAtracciones.Promociones.Promocion;
-import ParqueAtracciones.Promociones.PromocionAbsoluta;
-import ParqueAtracciones.Promociones.PromocionAxB;
-import ParqueAtracciones.Promociones.PromocionPorcentual;
+import RecepcionParque.Enums.TipoAtraccion;
+import RecepcionParque.Enums.TipoPromocion;
+import RecepcionParque.Promociones.Promocion;
+import RecepcionParque.Promociones.PromocionAbsoluta;
+import RecepcionParque.Promociones.PromocionAxB;
+import RecepcionParque.Promociones.PromocionPorcentual;
 
 public class Archivo {
 
