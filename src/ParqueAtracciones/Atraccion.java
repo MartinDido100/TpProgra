@@ -2,7 +2,7 @@ package ParqueAtracciones;
 
 import ParqueAtracciones.Enums.TipoAtraccion;
 
-public class Atraccion {
+public class Atraccion implements Comparable<Atraccion>{
 	private String nombre;
 	private double duracion;
 	private int cupos;
@@ -39,10 +39,22 @@ public class Atraccion {
 
 	@Override
 	public String toString() {
-		return "[" + nombre + "]";
+		return nombre;
 	}
 
 	public double getPrecio() {
 		return this.precio;
 	}
+	
+	@Override
+	public int compareTo(Atraccion o) {
+	    if(this.getPrecio() == o.getPrecio())
+	    {
+	    	double resta = this.getDuracion() - o.getDuracion();
+	        return (resta < 0) ? -1 : (resta > 0) ? 1 : 0;
+	    }
+	    double resta = this.getPrecio() - o.getPrecio();
+	    return (resta < 0) ? -1 : (resta > 0) ? 1 : 0;
+	}
+	
 }

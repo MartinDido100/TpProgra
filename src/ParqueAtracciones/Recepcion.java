@@ -3,7 +3,7 @@ package ParqueAtracciones;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import ParqueAtracciones.Enums.TipoAtraccion;
+
 import ParqueAtracciones.Promociones.PromocionAxB;
 
 public class Recepcion {
@@ -29,6 +29,11 @@ public class Recepcion {
 		return cond;
 	}
 	
+	private boolean puedoVenderAtraccion(Usuario usuario,Atraccion atraccion) {
+		return usuario.getPresupuesto() > atraccion.getPrecio() && usuario.getTiempo() > atraccion.getDuracion()
+				&& atraccion.getCupos() > 0;
+	}
+	
 	private boolean puedoVenderPaquete(Usuario usuario,Paquete paq) {
 		return usuario.getPresupuesto() > paq.getPrecioTotal() && usuario.getTiempo() > paq.getHorasTotales()
 				&& hayCuposPaquete(paq);
@@ -45,20 +50,62 @@ public class Recepcion {
 		return cond;
 	}
 	
-	public void recibir() {
-		///Aca va el quilombo
-		//Ir ofreciendo y hacer un arrayList de vendidas
+	public boolean ofrecerAtraccion(Atraccion atraccion,Scanner sc) {
+		System.out.println("Atraccion " + atraccion.getNombre() + ": ");
+		System.out.println("-Duracion: " + atraccion.getDuracion());
+		System.out.println("-Precio: " + atraccion.getPrecio());
 		
-		//Ir recorriendo cada usuario, setear el orden de paquetes y atracciones, ofrecer.
+		String rta;
+		do {
+			System.out.println("¿Acepta la sugerencia? Ingrese S o N");
+			rta = sc.next();
+		}while(rta != "S" || rta != "N" || rta != "s" || rta != "n");
+
+		if(rta == "S" || rta == "s") {
+			System.out.println("Paquete aceptado!");
+			atraccion.reducirCupos();
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean ofrecerPaquete(Paquete paqOfrecido,Scanner sc) {
+		System.out.println("Paquete " + paqOfrecido.getNombre() + ":");
+		System.out.println("-Atracciones incluidas: " + paqOfrecido.getAtracciones());
+		System.out.println("-Duracion: " + paqOfrecido.getHorasTotales());
+		System.out.println("-Precio original: " + paqOfrecido.getPrecioTotal());
+		System.out.println("-Precio con descuento: " + paqOfrecido.getProm().getPrecioFinal());
+		if(paqOfrecido.getProm() instanceof PromocionAxB) {
+			PromocionAxB prom = (PromocionAxB)(paqOfrecido.getProm());
+			System.out.println("En este paquete tenes como atraccion gratis a " + prom.getAtraccion().getNombre() + "!");
+		}
+
+		String rta;
+		do {
+			System.out.println("¿Acepta la sugerencia? Ingrese S o N");
+			rta = sc.next();
+		}while(rta != "S" || rta != "N" || rta != "s" || rta != "n");
+
+		if(rta == "S" || rta == "s") {
+			System.out.println("Paquete aceptado!");
+			paqOfrecido.restarCuposAtracciones();
+			return true;
+		}
+		return false;
+	}
+	
+	public void recibir() {
 		
 		Scanner sc = new Scanner(System.in);
+		
 		for(Usuario usuario : this.listaUsuarios) {
+			
+			RegistroCompra registroCompra = new RegistroCompra();
 			
 			ArrayList<Atraccion> atraccionesVendidas = new ArrayList<>();
 			
 			System.out.println("Buenas, " + usuario.getNombre());
 			
-			//Orden ofrecer: Paquetes por preferencia precio horas,Atracciones por preferencia precio horas
 			ArrayList<Paquete> paquetesPreferencia = new ArrayList<>();
 			ArrayList<Paquete> paquetesNoPreferidos = new ArrayList<>();
 			
@@ -70,39 +117,68 @@ public class Recepcion {
 				}
 			}
 			
+			ArrayList<Paquete> paquetesAOfrecer = new ArrayList<>();
+			
 			paquetesPreferencia.sort(null); //Si no anda pasar el ArrayList a Array de paquetes
 			paquetesNoPreferidos.sort(null);
+			
+			paquetesAOfrecer.addAll(paquetesPreferencia);
+			paquetesAOfrecer.addAll(paquetesNoPreferidos);
 		
-			for(Paquete paqPref : paquetesPreferencia) {
-				if(this.puedoVenderPaquete(usuario, paqPref) && this.ningunaAtraccionVendida(atraccionesVendidas,paqPref.getAtracciones())) {
-					System.out.println("Paquete " + paqPref.getNombre() + ":");
-					System.out.println("-Atracciones incluidas: " + paqPref.getAtracciones());
-					System.out.println("-Duracion: " + paqPref.getHorasTotales());
-					System.out.println("-Precio original: " + paqPref.getPrecioTotal());
-					System.out.println("-Precio con descuento: " + paqPref.getProm().getPrecioFinal());
-					if(paqPref.getProm() instanceof PromocionAxB) {
-						PromocionAxB prom = (PromocionAxB)(paqPref.getProm());
-						System.out.println("En este paquete tenes como atraccion gratis a " + prom.getAtraccion().getNombre() + "!");
-					}
-
-					String rta;
-					do {
-						System.out.println("¿Acepta la sugerencia? Ingrese S o N");
-						rta = sc.next();
-					}while(rta != "S" || rta != "N" || rta != "s" || rta != "n");
-
-					if(rta == "S" || rta == "s") {
-						System.out.println("Paquete aceptado!");
-						paqPref.restarCuposAtracciones();
-						atraccionesVendidas.addAll(paqPref.getAtracciones());
+			for(Paquete paqOfrecido : paquetesAOfrecer) {
+				if(this.puedoVenderPaquete(usuario,paqOfrecido) && this.ningunaAtraccionVendida(atraccionesVendidas,paqOfrecido.getAtracciones())) {
+					boolean vendido = this.ofrecerPaquete(paqOfrecido,sc);
+					if(vendido) {
+						atraccionesVendidas.addAll(paqOfrecido.getAtracciones());
+						registroCompra.addHoras(paqOfrecido.getHorasTotales());
+						registroCompra.addPaquete(paqOfrecido);
+						registroCompra.addPrecioTotal(paqOfrecido.getPrecioTotal());
+						usuario.hacerCompra(paqOfrecido.getHorasTotales(), paqOfrecido.getPrecioTotal());
 					}
 				}
-
 			}
+
+			ArrayList<Atraccion> atraccionesPreferencia = new ArrayList<>();
+			ArrayList<Atraccion> atraccionesNoPreferidos = new ArrayList<>();
+			
+			for(Atraccion  atr : this.parque.getAll()) {
+				if(!atraccionesVendidas.contains(atr)) {
+					if(atr.getTipo() == usuario.getPreferencia()) {
+						atraccionesPreferencia.add(atr);
+					}else {
+						atraccionesNoPreferidos.add(atr);
+					}
+				}
+			}
+			
+			atraccionesNoPreferidos.sort(null);
+			atraccionesPreferencia.sort(null);
+			
+			ArrayList<Atraccion> atraccionesAOfrecer = new ArrayList<>();
+			
+			atraccionesAOfrecer.addAll(atraccionesPreferencia);
+			atraccionesAOfrecer.addAll(atraccionesAOfrecer);
+			
+			for(Atraccion atrAOfrecer : atraccionesAOfrecer) {
+				if(this.puedoVenderAtraccion(usuario,atrAOfrecer)) {
+					boolean vendido = this.ofrecerAtraccion(atrAOfrecer, sc);
+					if(vendido) {
+						usuario.hacerCompra(atrAOfrecer.getDuracion(),atrAOfrecer.getPrecio());
+						registroCompra.addHoras(atrAOfrecer.getDuracion());
+						registroCompra.addPrecioTotal(atrAOfrecer.getPrecio());
+						atraccionesVendidas.add(atrAOfrecer);
+					}
+				}
+			}
+
+			registroCompra.setAtracciones(atraccionesVendidas);
+			registroCompra.setUsuario(usuario);
+	
+			
 			
 		}
 		
+		
+		sc.close();
 	}
-	
-	
 }

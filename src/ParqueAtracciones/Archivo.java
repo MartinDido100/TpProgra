@@ -1,7 +1,9 @@
 package ParqueAtracciones;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
@@ -17,7 +19,8 @@ public class Archivo {
 
 	private String nombre;
 	
-	Archivo(String nom){
+	public Archivo(String nom){
+		System.out.println("Constructor");
 		this.nombre = nom;
 	}
 	
@@ -27,9 +30,9 @@ public class Archivo {
 	
 	//Leer usuarios
 	public ArrayList<Usuario> leerUsuarios(){
+		System.out.println("Usuarios");
 		Scanner sc = null;
 		ArrayList<Usuario> usuarios = null;
-		
 		
 		try {
 			File arch = new File("Archivos/" + this.nombre + ".in");
@@ -61,7 +64,7 @@ public class Archivo {
 	public ParqueAtracciones crearAtracciones() {
 		Scanner sc = null;
 		ParqueAtracciones p = null;
-		
+		System.out.println("aaaa");
 		try {
 			File arch = new File("Archivos/" + this.nombre + ".in");
 			sc = new Scanner(arch);
@@ -92,6 +95,32 @@ public class Archivo {
 	}
 	
 	
+	public void guardarRegistroCompra(RegistroCompra registro) {
+	    FileWriter file = null;
+	    PrintWriter printerWriter = null;
+
+		
+		  try {
+			  file = new FileWriter("Archivos/" + this.nombre + ".out",true);
+			  printerWriter = new PrintWriter(file);
+
+			  printerWriter.println(registro);
+			  printerWriter.println("--------------------------------------------");
+			  
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		    } finally {
+		        if (file != null) {
+		            try {
+		                file.close();
+		            } catch (IOException e) {
+		                e.printStackTrace();
+		            }
+		        }
+		    }
+		
+	}
+	
 	//Crear leerUsuarios
 	
 	public ArrayList<Paquete> leerPaquetes(ParqueAtracciones parque){
@@ -106,7 +135,6 @@ public class Archivo {
 			
 			listaPaquetes = new ArrayList<Paquete>();
 			Paquete paq;
-			
 			while(sc.hasNextLine()) {
 				String[] linea = sc.nextLine().split("|");
 				

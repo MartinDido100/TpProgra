@@ -14,6 +14,11 @@ public class Usuario {
 		this.tiempo = tiempo;
 		this.preferencia = preferencia;
 	}
+	
+	public void hacerCompra(double horas,double plata) {
+		this.presupuesto -= plata;
+		this.tiempo -= tiempo;
+	}
 
 	public String getNombre() {
 		return nombre;
@@ -30,7 +35,4 @@ public class Usuario {
 	public TipoAtraccion getPreferencia() {
 		return preferencia;
 	}
-	
-	
-	
 }

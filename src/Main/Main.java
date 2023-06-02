@@ -1,6 +1,8 @@
-package ParqueAtracciones;
+package Main;
 
 import java.util.ArrayList;
+
+import ParqueAtracciones.*;
 
 public class Main {
 
@@ -12,7 +14,6 @@ public class Main {
 		//Cargar archivos
 		Archivo arch = new Archivo("Usuarios");
 		ArrayList<Usuario> listaUsuarios = arch.leerUsuarios();
-		
 		arch.setNombre("Atracciones");
 		ParqueAtracciones parque = arch.crearAtracciones();
 		

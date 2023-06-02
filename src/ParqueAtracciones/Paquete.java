@@ -59,6 +59,13 @@ public class Paquete implements Comparable<Paquete>{
 		return precio;
 	}
 	
+	
+	
+	@Override
+	public String toString() {
+		return nombre;
+	}
+
 	@Override
 	public int compareTo(Paquete o) {
 	    if(this.getPrecioTotal() == o.getPrecioTotal())
