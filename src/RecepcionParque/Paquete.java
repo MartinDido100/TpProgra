@@ -20,6 +20,7 @@ public class Paquete implements Comparable<Paquete>{
 		this.nombre = nombre;
 		this.atracciones = new ArrayList<>();
 		this.atracciones.addAll(atracciones);
+		this.tipoAtracciones = atracciones.get(0).getTipo();
 		this.prom = prom;
 	}
 
@@ -36,7 +37,15 @@ public class Paquete implements Comparable<Paquete>{
 	public ArrayList<Atraccion> getAtracciones() {
 		return this.atracciones;
 	}
-
+	
+	public double getPrecioOriginal() {
+		return this.prom.getPrecioOriginal();
+	}
+	
+	public double getPrecioFinal() {
+		return this.prom.getPrecioFinal();
+	}
+	
 	public Promocion getProm() {
 		return prom;
 	}
@@ -50,17 +59,6 @@ public class Paquete implements Comparable<Paquete>{
 		return horas;
 	}
 	
-	public double getPrecioTotal() {
-		double precio = 0;
-		for(Atraccion atr : this.atracciones) {
-			precio += atr.getPrecio();
-		}
-		
-		return precio;
-	}
-	
-	
-	
 	@Override
 	public String toString() {
 		return nombre;
@@ -68,12 +66,12 @@ public class Paquete implements Comparable<Paquete>{
 
 	@Override
 	public int compareTo(Paquete o) {
-	    if(this.getPrecioTotal() == o.getPrecioTotal())
+	    if(this.getPrecioFinal() == o.getPrecioFinal())
 	    {
 	    	double resta = this.getHorasTotales() - o.getHorasTotales();
-	        return (resta < 0) ? -1 : (resta > 0) ? 1 : 0;
+	        return (resta < 0) ? 1 : (resta > 0) ? -1 : 0;
 	    }
-	    double resta = this.getPrecioTotal() - o.getPrecioTotal();
-	    return (resta < 0) ? -1 : (resta > 0) ? 1 : 0;
+	    double resta = this.getPrecioFinal() - o.getPrecioFinal();
+	    return (resta < 0) ? 1 : (resta > 0) ? -1 : 0;
 	}
 }

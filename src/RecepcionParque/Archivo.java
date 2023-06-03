@@ -20,7 +20,6 @@ public class Archivo {
 	private String nombre;
 	
 	public Archivo(String nom){
-		System.out.println("Constructor");
 		this.nombre = nom;
 	}
 	
@@ -30,7 +29,6 @@ public class Archivo {
 	
 	//Leer usuarios
 	public ArrayList<Usuario> leerUsuarios(){
-		System.out.println("Usuarios");
 		Scanner sc = null;
 		ArrayList<Usuario> usuarios = null;
 		
@@ -41,12 +39,13 @@ public class Archivo {
 			usuarios = new ArrayList<>();
 			
 			while(sc.hasNextLine()) {
-				String[] campos = sc.nextLine().split("|");
+				String[] campos = sc.nextLine().split("\\|");
+			
 				
 				String nombre = campos[0];
 				Double presupuesto = Double.parseDouble(campos[1]);
 				Double tiempo = Double.parseDouble(campos[2]);
-				TipoAtraccion preferencia = TipoAtraccion.valueOf(campos[3]);
+				TipoAtraccion preferencia = TipoAtraccion.valueOf(campos[3].toUpperCase());
 				
 				usuarios.add(new Usuario(nombre,presupuesto,tiempo,preferencia));
 			}
@@ -64,7 +63,6 @@ public class Archivo {
 	public ParqueAtracciones crearAtracciones() {
 		Scanner sc = null;
 		ParqueAtracciones p = null;
-		System.out.println("aaaa");
 		try {
 			File arch = new File("Archivos/" + this.nombre + ".in");
 			sc = new Scanner(arch);
@@ -72,8 +70,7 @@ public class Archivo {
 			p = new ParqueAtracciones();
 			
 			while(sc.hasNextLine()) {
-				String[] campos = sc.nextLine().split("|");
-				
+				String[] campos = sc.nextLine().split("\\|");
 				String nombre = campos[0];
 				double hs = Double.parseDouble(campos[1]);
 				int cupo = Integer.parseInt(campos[2]);
@@ -95,17 +92,18 @@ public class Archivo {
 	}
 	
 	
-	public void guardarRegistroCompra(RegistroCompra registro) {
+	public void guardarRegistrosCompra(ArrayList<RegistroCompra> registros) {
 	    FileWriter file = null;
 	    PrintWriter printerWriter = null;
-
 		
 		  try {
-			  file = new FileWriter("Archivos/" + this.nombre + ".out",true);
+			  file = new FileWriter("Archivos/" + this.nombre + ".out");
 			  printerWriter = new PrintWriter(file);
 
-			  printerWriter.println(registro);
-			  printerWriter.println("--------------------------------------------");
+			  for(RegistroCompra reg : registros) {
+				  printerWriter.println(reg);
+				  printerWriter.println("--------------------------------------------");
+			  }
 			  
 		    } catch (Exception e) {
 		        e.printStackTrace();
@@ -136,7 +134,7 @@ public class Archivo {
 			listaPaquetes = new ArrayList<Paquete>();
 			Paquete paq;
 			while(sc.hasNextLine()) {
-				String[] linea = sc.nextLine().split("|");
+				String[] linea = sc.nextLine().split("\\|");
 				
 				String[] atracciones = linea[0].split(";");
 				ArrayList<Atraccion> listaAtracciones = new ArrayList<>();
@@ -164,7 +162,7 @@ public class Archivo {
 				}else {
 					String atrGratis = linea[3];
 					
-					Promocion prom = new PromocionAxB(parque.getAtraccion(atrGratis),precioOriginalPaquete,precioOriginalPaquete - parque.getAtraccion(atrGratis).getPrecio());
+					Promocion prom = new PromocionAxB(parque.getAtraccion(atrGratis),precioOriginalPaquete,parque.getAtraccion(atrGratis).getPrecio());
 					
 					paq = new Paquete(nombrePaquete,listaAtracciones,prom);
 					

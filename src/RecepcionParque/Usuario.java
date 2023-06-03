@@ -17,7 +17,7 @@ public class Usuario {
 	
 	public void hacerCompra(double horas,double plata) {
 		this.presupuesto -= plata;
-		this.tiempo -= tiempo;
+		this.tiempo -= horas;
 	}
 
 	public String getNombre() {

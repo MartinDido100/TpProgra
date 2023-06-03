@@ -1,6 +1,6 @@
 package RecepcionParque;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
 public class ParqueAtracciones {
@@ -14,8 +14,8 @@ public class ParqueAtracciones {
 		return this.mapAtracciones.get(nombre);
 	}
 	
-	public ArrayList<Atraccion> getAll(){
-		return (ArrayList<Atraccion>)this.mapAtracciones.values();
+	public Collection<Atraccion> getAll(){
+		return this.mapAtracciones.values();
 	}
 	
 	public void setAtraccion(String nombre,Atraccion atraccion) {

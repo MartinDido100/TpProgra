@@ -29,12 +29,12 @@ public class Recepcion {
 	}
 	
 	private boolean puedoVenderAtraccion(Usuario usuario,Atraccion atraccion) {
-		return usuario.getPresupuesto() > atraccion.getPrecio() && usuario.getTiempo() > atraccion.getDuracion()
+		return usuario.getPresupuesto() >= atraccion.getPrecio() && usuario.getTiempo() >= atraccion.getDuracion()
 				&& atraccion.getCupos() > 0;
 	}
 	
 	private boolean puedoVenderPaquete(Usuario usuario,Paquete paq) {
-		return usuario.getPresupuesto() > paq.getPrecioTotal() && usuario.getTiempo() > paq.getHorasTotales()
+		return usuario.getPresupuesto() > paq.getPrecioFinal() && usuario.getTiempo() > paq.getHorasTotales()
 				&& hayCuposPaquete(paq);
 	}
 	
@@ -54,14 +54,17 @@ public class Recepcion {
 		System.out.println("-Duracion: " + atraccion.getDuracion());
 		System.out.println("-Precio: " + atraccion.getPrecio());
 		
-		String rta;
+		//Esto podria ser funcion
+		String linea;
+		char rta;
 		do {
-			System.out.println("¿Acepta la sugerencia? Ingrese S o N");
-			rta = sc.next();
-		}while(rta != "S" || rta != "N" || rta != "s" || rta != "n");
+			System.out.println("\n¿Acepta la sugerencia? Ingrese S o N");
+			linea = sc.next();
+			rta = linea.charAt(0);
+		}while((rta != 'S' || rta != 'N' || rta != 's' || rta != 'n') && linea.length() != 1);
 
-		if(rta == "S" || rta == "s") {
-			System.out.println("Paquete aceptado!");
+		if(rta == 'S' || rta == 's') {
+			System.out.println("Atraccion aceptada!");
 			atraccion.reducirCupos();
 			return true;
 		}
@@ -71,21 +74,23 @@ public class Recepcion {
 	public boolean ofrecerPaquete(Paquete paqOfrecido,Scanner sc) {
 		System.out.println("Paquete " + paqOfrecido.getNombre() + ":");
 		System.out.println("-Atracciones incluidas: " + paqOfrecido.getAtracciones());
-		System.out.println("-Duracion: " + paqOfrecido.getHorasTotales());
-		System.out.println("-Precio original: " + paqOfrecido.getPrecioTotal());
-		System.out.println("-Precio con descuento: " + paqOfrecido.getProm().getPrecioFinal());
+		System.out.println("-Duracion: " + String.format("%.2f", paqOfrecido.getHorasTotales()));   
+		System.out.println("-Precio original: " + String.format("%.2f", paqOfrecido.getPrecioOriginal()));
+		System.out.println("-Precio con descuento: " + paqOfrecido.getPrecioFinal());
 		if(paqOfrecido.getProm() instanceof PromocionAxB) {
 			PromocionAxB prom = (PromocionAxB)(paqOfrecido.getProm());
 			System.out.println("En este paquete tenes como atraccion gratis a " + prom.getAtraccion().getNombre() + "!");
 		}
 
-		String rta;
+		String linea;
+		char rta;
 		do {
-			System.out.println("¿Acepta la sugerencia? Ingrese S o N");
-			rta = sc.next();
-		}while(rta != "S" || rta != "N" || rta != "s" || rta != "n");
+			System.out.println("\n¿Acepta la sugerencia? Ingrese S o N");
+			linea = sc.next();
+			rta = linea.charAt(0);
+		}while((rta != 'S' || rta != 'N' || rta != 's' || rta != 'n') && linea.length() != 1);
 
-		if(rta == "S" || rta == "s") {
+		if(rta == 'S' || rta == 's') {
 			System.out.println("Paquete aceptado!");
 			paqOfrecido.restarCuposAtracciones();
 			return true;
@@ -93,9 +98,11 @@ public class Recepcion {
 		return false;
 	}
 	
-	public void recibir() {
+	public ArrayList<RegistroCompra> recibir() {
 		
 		Scanner sc = new Scanner(System.in);
+		
+		ArrayList<RegistroCompra> registros = new ArrayList<>();
 		
 		for(Usuario usuario : this.listaUsuarios) {
 			
@@ -107,6 +114,8 @@ public class Recepcion {
 			
 			ArrayList<Paquete> paquetesPreferencia = new ArrayList<>();
 			ArrayList<Paquete> paquetesNoPreferidos = new ArrayList<>();
+			
+			
 			
 			for(Paquete paq : this.listaPaquetes) {
 				if(paq.getTipoAtracciones() == usuario.getPreferencia()) {
@@ -124,15 +133,17 @@ public class Recepcion {
 			paquetesAOfrecer.addAll(paquetesPreferencia);
 			paquetesAOfrecer.addAll(paquetesNoPreferidos);
 		
+			
 			for(Paquete paqOfrecido : paquetesAOfrecer) {
 				if(this.puedoVenderPaquete(usuario,paqOfrecido) && this.ningunaAtraccionVendida(atraccionesVendidas,paqOfrecido.getAtracciones())) {
 					boolean vendido = this.ofrecerPaquete(paqOfrecido,sc);
+					System.out.println("-----------------------------------------");
 					if(vendido) {
 						atraccionesVendidas.addAll(paqOfrecido.getAtracciones());
 						registroCompra.addHoras(paqOfrecido.getHorasTotales());
 						registroCompra.addPaquete(paqOfrecido);
-						registroCompra.addPrecioTotal(paqOfrecido.getPrecioTotal());
-						usuario.hacerCompra(paqOfrecido.getHorasTotales(), paqOfrecido.getPrecioTotal());
+						registroCompra.addPrecioTotal(paqOfrecido.getPrecioFinal());
+						usuario.hacerCompra(paqOfrecido.getHorasTotales(), paqOfrecido.getPrecioFinal());
 					}
 				}
 			}
@@ -149,18 +160,19 @@ public class Recepcion {
 					}
 				}
 			}
-			
+
 			atraccionesNoPreferidos.sort(null);
 			atraccionesPreferencia.sort(null);
 			
 			ArrayList<Atraccion> atraccionesAOfrecer = new ArrayList<>();
 			
 			atraccionesAOfrecer.addAll(atraccionesPreferencia);
-			atraccionesAOfrecer.addAll(atraccionesAOfrecer);
+			atraccionesAOfrecer.addAll(atraccionesNoPreferidos);
 			
 			for(Atraccion atrAOfrecer : atraccionesAOfrecer) {
 				if(this.puedoVenderAtraccion(usuario,atrAOfrecer)) {
 					boolean vendido = this.ofrecerAtraccion(atrAOfrecer, sc);
+					System.out.println("-----------------------------------------");
 					if(vendido) {
 						usuario.hacerCompra(atrAOfrecer.getDuracion(),atrAOfrecer.getPrecio());
 						registroCompra.addHoras(atrAOfrecer.getDuracion());
@@ -173,11 +185,10 @@ public class Recepcion {
 			registroCompra.setAtracciones(atraccionesVendidas);
 			registroCompra.setUsuario(usuario);
 	
-			
-			
+			registros.add(registroCompra);
 		}
 		
-		
 		sc.close();
+		return registros;
 	}
 }

@@ -7,5 +7,9 @@ public abstract class Promocion {
 		this.precioOriginal = original;
 	}
 
+	public double getPrecioOriginal() {
+		return precioOriginal;
+	}
+
 	public abstract double getPrecioFinal();
 }

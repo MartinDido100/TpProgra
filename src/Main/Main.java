@@ -10,7 +10,7 @@ public class Main {
 		String linea = "-".repeat(146);
 		System.out.println(String.format("\n%90s", "Welcome to Disney World"));
 		System.out.println(linea);
-		
+
 		//Cargar archivos
 		Archivo arch = new Archivo("Usuarios");
 		ArrayList<Usuario> listaUsuarios = arch.leerUsuarios();
@@ -22,7 +22,9 @@ public class Main {
 		
 		Recepcion recep = new Recepcion(listaUsuarios,parque,listaPaquetes);
 		
-		recep.recibir();
+		arch.setNombre("Registros");
+		arch.guardarRegistrosCompra(recep.recibir());
+		
 	}
 
 }

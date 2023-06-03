@@ -59,11 +59,11 @@ public class RegistroCompra {
 
 	@Override
 	public String toString() {
-		return "\tUsuario: " + usuario.getNombre() + "\n" +
+		return "Usuario: " + usuario.getNombre() + "\n" +
 			   "Atracciones compradas: " + atracciones + "\n" +
 			   "Paquetes incluidos: " + paquetes + "\n" +
-			   "Horas totales: " + horas + "\n" +
-			   "Precio pagado: " + precioTotal; 
+			   "Horas totales: " + String.format("%.2f",horas) + "\n" +
+			   "Precio pagado: " + String.format("%.2f",precioTotal); 
 	}
 	
 }
