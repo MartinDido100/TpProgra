@@ -88,7 +88,7 @@ public class Recepcion {
 			System.out.println("\n¿Acepta la sugerencia? Ingrese S o N");
 			linea = sc.next();
 			rta = linea.charAt(0);
-		}while((rta != 'S' || rta != 'N' || rta != 's' || rta != 'n') && linea.length() != 1);
+		}while(rta != 'S' && rta != 'N' && rta != 's' && rta != 'n' && linea.length() != 1);
 
 		if(rta == 'S' || rta == 's') {
 			System.out.println("Paquete aceptado!");

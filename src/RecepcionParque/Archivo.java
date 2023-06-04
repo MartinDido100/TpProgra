@@ -17,14 +17,14 @@ import RecepcionParque.Promociones.PromocionPorcentual;
 
 public class Archivo {
 
-	private String nombre;
+	private String path;
 	
-	public Archivo(String nom){
-		this.nombre = nom;
+	public Archivo(String path){
+		this.path = path;
 	}
 	
-	public void setNombre(String nom){
-		this.nombre = nom;
+	public void setNombre(String path){
+		this.path = path;
 	}
 	
 	//Leer usuarios
@@ -33,7 +33,7 @@ public class Archivo {
 		ArrayList<Usuario> usuarios = null;
 		
 		try {
-			File arch = new File("Archivos/" + this.nombre + ".in");
+			File arch = new File(path);
 			sc = new Scanner(arch);
 			
 			usuarios = new ArrayList<>();
@@ -64,7 +64,7 @@ public class Archivo {
 		Scanner sc = null;
 		ParqueAtracciones p = null;
 		try {
-			File arch = new File("Archivos/" + this.nombre + ".in");
+			File arch = new File(path);
 			sc = new Scanner(arch);
 			
 			p = new ParqueAtracciones();
@@ -97,7 +97,7 @@ public class Archivo {
 	    PrintWriter printerWriter = null;
 		
 		  try {
-			  file = new FileWriter("Archivos/" + this.nombre + ".out");
+			  file = new FileWriter(path);
 			  printerWriter = new PrintWriter(file);
 
 			  for(RegistroCompra reg : registros) {
@@ -126,7 +126,7 @@ public class Archivo {
 		Scanner sc = null;
 		
 		try {
-			File arch = new File("Archivos/" + this.nombre + ".in");
+			File arch = new File(path);
 			sc = new Scanner(arch);
 			
 			sc.useLocale(Locale.ENGLISH);
