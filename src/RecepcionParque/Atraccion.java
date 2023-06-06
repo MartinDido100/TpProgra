@@ -51,10 +51,9 @@ public class Atraccion implements Comparable<Atraccion>{
 	    if(this.getPrecio() == o.getPrecio())
 	    {
 	    	double resta = this.getDuracion() - o.getDuracion();
-	        return (resta < 0) ? -1 : (resta > 0) ? 1 : 0;
+	        return (resta < 0) ? 1 : (resta > 0) ? -1 : 0;
 	    }
 	    double resta = this.getPrecio() - o.getPrecio();
-	    return (resta < 0) ? -1 : (resta > 0) ? 1 : 0;
+	    return (resta < 0) ? 1 : (resta > 0) ? -1 : 0;
 	}
-	
 }

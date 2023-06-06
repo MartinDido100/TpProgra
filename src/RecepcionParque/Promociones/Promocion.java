@@ -1,5 +1,6 @@
 package RecepcionParque.Promociones;
 
+
 public abstract class Promocion {
 	protected double precioOriginal;
 	

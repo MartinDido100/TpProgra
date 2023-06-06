@@ -7,6 +7,7 @@ import RecepcionParque.Enums.TipoAtraccion;
 import RecepcionParque.Promociones.Promocion;
 
 public class Paquete implements Comparable<Paquete>{
+
 	private String nombre;
 	private ArrayList<Atraccion> atracciones;
 	private Promocion prom;
@@ -24,6 +25,17 @@ public class Paquete implements Comparable<Paquete>{
 		this.prom = prom;
 	}
 
+	public int getCuposPaquete() {
+		int menor = this.atracciones.get(0).getCupos();
+		for(Atraccion atr : this.atracciones) {
+			if(atr.getCupos() < menor) {
+				menor = atr.getCupos();
+			}
+		}
+		
+		return menor;
+	}
+	
 	public void restarCuposAtracciones() {
 		for(Atraccion atr : this.atracciones) {
 			atr.reducirCupos();

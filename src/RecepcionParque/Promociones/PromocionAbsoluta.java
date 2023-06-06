@@ -1,5 +1,6 @@
 package RecepcionParque.Promociones;
 
+
 public class PromocionAbsoluta extends Promocion{
 	private double precioAbsoluto;
 	

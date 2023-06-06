@@ -23,7 +23,8 @@ public class PaqueteTests {
 
 		atraccionesPaquete.add(new Atraccion("Star Wars",2.2,1,20,TipoAtraccion.SIMULACION));
 		atraccionesPaquete.add(new Atraccion("SpiderMan",1.5,20,25,TipoAtraccion.SIMULACION));
-		atraccionesPaquete.add(new Atraccion("Lilo y Stitch",6,11,22,TipoAtraccion.SIMULACION));		
+		atraccionesPaquete.add(new Atraccion("Lilo y Stitch",6,11,22,TipoAtraccion.SIMULACION));
+
 	}
 	
 	@Test
@@ -75,6 +76,13 @@ public class PaqueteTests {
 		Arrays.sort(paquetes);
 		
 		assertArrayEquals(esperado, paquetes);
+	}
+	
+	@Test
+	public void cuposPaqueteCorrectos() {
+		Paquete paq = new Paquete("PaqueteTest0",atraccionesPaquete,new PromocionAbsoluta(67, 50));
+		
+		assertEquals(1, paq.getCuposPaquete());
 	}
 	
 }

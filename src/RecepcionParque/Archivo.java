@@ -27,7 +27,6 @@ public class Archivo {
 		this.path = path;
 	}
 	
-	//Leer usuarios
 	public ArrayList<Usuario> leerUsuarios(){
 		Scanner sc = null;
 		ArrayList<Usuario> usuarios = null;
@@ -40,7 +39,6 @@ public class Archivo {
 			
 			while(sc.hasNextLine()) {
 				String[] campos = sc.nextLine().split("\\|");
-			
 				
 				String nombre = campos[0];
 				Double presupuesto = Double.parseDouble(campos[1]);
@@ -59,7 +57,6 @@ public class Archivo {
 		return usuarios;
 	}
 	
-	//Crear leerAtracciones
 	public ParqueAtracciones crearAtracciones() {
 		Scanner sc = null;
 		ParqueAtracciones p = null;
@@ -95,7 +92,6 @@ public class Archivo {
 	public void guardarRegistrosCompra(ArrayList<RegistroCompra> registros) {
 	    FileWriter file = null;
 	    PrintWriter printerWriter = null;
-		
 		  try {
 			  file = new FileWriter(path);
 			  printerWriter = new PrintWriter(file);
@@ -118,8 +114,7 @@ public class Archivo {
 		    }
 		
 	}
-	
-	//Crear leerUsuarios
+
 	
 	public ArrayList<Paquete> leerPaquetes(ParqueAtracciones parque){
 		ArrayList<Paquete> listaPaquetes = null;

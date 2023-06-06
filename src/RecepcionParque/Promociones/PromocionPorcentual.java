@@ -1,5 +1,6 @@
 package RecepcionParque.Promociones;
 
+
 public class PromocionPorcentual extends Promocion{
 	private double porcentajeDto;
 	
@@ -12,5 +13,4 @@ public class PromocionPorcentual extends Promocion{
 	public double getPrecioFinal() {
 		return this.precioOriginal - (this.precioOriginal*porcentajeDto);
 	}
-
 }

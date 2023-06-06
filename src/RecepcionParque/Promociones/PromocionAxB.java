@@ -1,5 +1,6 @@
 package RecepcionParque.Promociones;
 
+
 import RecepcionParque.Atraccion;
 
 public class PromocionAxB extends Promocion{

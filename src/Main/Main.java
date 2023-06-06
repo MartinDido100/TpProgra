@@ -7,11 +7,18 @@ import RecepcionParque.*;
 public class Main {
 
 	public static void main(String[] args) {
-		String linea = "-".repeat(146);
-		System.out.println(String.format("\n%30s", "Welcome to Disney World"));
-		System.out.println(linea);
 
-		//Cargar archivos
+		System.out.println("::::::::: ::::::::::: :::::::::: ::::    ::: :::     ::: :::::::::: ::::    ::: ::::::::::: :::::::::   ::::::::   ::::::::\r\n"
+				+ ":+:    :+:    :+:     :+:        :+:+:   :+: :+:     :+: :+:        :+:+:   :+:     :+:     :+:    :+: :+:    :+: :+:    :+: \r\n"
+				+ "+:+    +:+    +:+     +:+        :+:+:+  +:+ +:+     +:+ +:+        :+:+:+  +:+     +:+     +:+    +:+ +:+    +:+ +:+\r\n"
+				+ "+#++:++#+     +#+     +#++:++#   +#+ +:+ +#+ +#+     +:+ +#++:++#   +#+ +:+ +#+     +#+     +#+    +:+ +#+    +:+ +#++:++#++ \r\n"
+				+ "+#+    +#+    +#+     +#+        +#+  +#+#+#  +#+   +#+  +#+        +#+  +#+#+#     +#+     +#+    +#+ +#+    +#+        +#+ \r\n"
+				+ "#+#    #+#    #+#     #+#        #+#   #+#+#   #+#+#+#   #+#        #+#   #+#+#     #+#     #+#    #+# #+#    #+# #+#    #+# \r\n"
+				+ "######### ########### ########## ###    ####     ###     ########## ###    #### ########### #########   ########   ########");
+		
+		String linea = "-".repeat(146);
+		System.out.println(linea);
+		
 		Archivo arch = new Archivo("Archivos/Usuarios.in");
 		ArrayList<Usuario> listaUsuarios = arch.leerUsuarios();
 		arch.setNombre("Archivos/Atracciones.in");

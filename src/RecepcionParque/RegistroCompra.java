@@ -17,40 +17,31 @@ public class RegistroCompra {
 		this.horas = 0;
 	}
 
-	public double getPrecioTotal() {
-		return precioTotal;
-	}
-
 	public void addPrecioTotal(double precio) {
 		this.precioTotal += precio;
 	}
 
+	public void addPaquete(Paquete paquete) {
+		this.paquetes.add(paquete);
+		for(Atraccion atr : paquete.getAtracciones()) {
+			if(!this.atracciones.contains(atr)) {
+				this.atracciones.add(atr);
+			}
+		}
+	}
+	
+	public void addAtraccion(Atraccion atr) {
+		if(!this.atracciones.contains(atr)) {
+			this.atracciones.add(atr);
+		}
+	}
+	
 	public ArrayList<Atraccion> getAtracciones() {
 		return atracciones;
 	}
 
-	public void setAtracciones(ArrayList<Atraccion> atraccionesVendidas) {
-		this.atracciones = atraccionesVendidas;
-	}
-
-	public ArrayList<Paquete> getPaquetes() {
-		return paquetes;
-	}
-
-	public void addPaquete(Paquete paquete) {
-		this.paquetes.add(paquete);
-	}
-
-	public double getHoras() {
-		return horas;
-	}
-
 	public void addHoras(double horas) {
 		this.horas += horas;
-	}
-
-	public Usuario getUsuario() {
-		return usuario;
 	}
 
 	public void setUsuario(Usuario usuario) {
