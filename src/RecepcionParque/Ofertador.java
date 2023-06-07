@@ -30,7 +30,7 @@ public class Ofertador {
 				&& paq.getCuposPaquete() > 0 && this.ningunaAtraccionPaqueteComprada(paq);
 	}
 	
-	private boolean atraccionComprada(Atraccion atr) {
+	public boolean atraccionComprada(Atraccion atr) {
 		return this.atraccionesCompradas.contains(atr);
 	}
 	
