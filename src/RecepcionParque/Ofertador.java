@@ -1,40 +1,40 @@
 package RecepcionParque;
 
 import java.util.ArrayList;
-
 public class Ofertador {
 
 	private Usuario usuario;
 	private ArrayList<Paquete> paquetesAOfertar;
 	private ArrayList<Atraccion> atraccionesAOfertar;
-	private ArrayList<Atraccion> atraccionesCompradas;
+	private RegistroCompra compra;
 	
 	public Ofertador() {
 		usuario = null;
 		paquetesAOfertar = new ArrayList<>();
 		atraccionesAOfertar = new ArrayList<>();
-		atraccionesCompradas = new ArrayList<>();
+		compra = new RegistroCompra();
 	}
 	
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+		this.compra.setUsuario(usuario);
 	}
 	
 	private boolean puedoVenderAtraccion(Atraccion atraccion) {
 		return this.usuario.getPresupuesto() >= atraccion.getPrecio() && this.usuario.getTiempo() >= atraccion.getDuracion()
-				&& atraccion.getCupos() > 0 && !this.atraccionesCompradas.contains(atraccion);
+				&& atraccion.getCupos() > 0 && !this.compra.getAtracciones().contains(atraccion);
 	}
 	
 	private boolean puedoVenderPaquete(Paquete paq) {
 		return this.usuario.getPresupuesto() >= paq.getPrecioFinal() && this.usuario.getTiempo() >= paq.getHorasTotales()
-				&& paq.getCuposPaquete() > 0 && this.ningunaAtraccionPaqueteComprada(paq);
+				&& paq.getCuposPaquete() > 0 && this.puedoOfertarPaquete(paq);
 	}
 	
 	public boolean atraccionComprada(Atraccion atr) {
-		return this.atraccionesCompradas.contains(atr);
+		return this.compra.getAtracciones().contains(atr);
 	}
 	
-	public boolean ningunaAtraccionPaqueteComprada(Paquete paq) {
+	public boolean puedoOfertarPaquete(Paquete paq) {
 		boolean cond = true;
 		for(Atraccion atr : paq.getAtracciones()) {
 			if(this.atraccionComprada(atr)) {
@@ -90,25 +90,31 @@ public class Ofertador {
 
 	public void hacerCompra(Paquete paq) {		
 		this.usuario.hacerCompra(paq.getHorasTotales(), paq.getPrecioFinal());
-		this.atraccionesCompradas.addAll(paq.getAtracciones());
+		this.compra.addAtracciones(paq.getAtracciones());
+		
+		this.compra.addPaquete(paq);
+		this.compra.addHoras(paq.getHorasTotales());
+		this.compra.addPrecioTotal(paq.getPrecioFinal());
 		
 		for(Atraccion atr : paq.getAtracciones()) {
 			atr.reducirCupos();
+			
 		}
 		
 	}
 	
 	public void hacerCompra(Atraccion atraccion) {
 		this.usuario.hacerCompra(atraccion.getDuracion(), atraccion.getPrecio());
-		this.atraccionesCompradas.add(atraccion);
+		this.compra.addAtraccion(atraccion);
+		this.compra.addHoras(atraccion.getDuracion());
+		this.compra.addPrecioTotal(atraccion.getPrecio());
 		atraccion.reducirCupos();
-		
 	}
 	
 	public void reiniciarOferta() {
 		this.paquetesAOfertar.clear();
 		this.atraccionesAOfertar.clear();
-		this.atraccionesCompradas.clear();
+		this.compra = new RegistroCompra();
 	}
 	
 	public ArrayList<Paquete> getPaquetesAOfertar() {
@@ -119,7 +125,7 @@ public class Ofertador {
 		return atraccionesAOfertar;
 	}
 
-	public ArrayList<Atraccion> getAtraccionesCompradas() {
-		return this.atraccionesCompradas;
+	public RegistroCompra getCompra() {
+		return this.compra;
 	}
 }

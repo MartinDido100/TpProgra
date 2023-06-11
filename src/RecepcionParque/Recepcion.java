@@ -64,10 +64,6 @@ public class Recepcion {
 		ArrayList<RegistroCompra> registros = new ArrayList<>();
 		
 		for(Usuario usuario : this.listaUsuarios) {
-	
-			RegistroCompra reg = new RegistroCompra();
-	
-			reg.setUsuario(usuario);
 			
 			ofertador.setUsuario(usuario);
 			
@@ -76,34 +72,29 @@ public class Recepcion {
 			ofertador.procesarPaquetes(this.listaPaquetes);
 			
 			for(Paquete paqOfrecido : ofertador.getPaquetesAOfertar()) {
-				if(ofertador.ningunaAtraccionPaqueteComprada(paqOfrecido)) {
+				if(ofertador.puedoOfertarPaquete(paqOfrecido)) {
 					boolean vendido = this.ofrecerPaquete(paqOfrecido,sc);
 					String linea = "-".repeat(146);
 					System.out.println(linea);
 					if(vendido) {
-						reg.addHoras(paqOfrecido.getHorasTotales());
-						reg.addPrecioTotal(paqOfrecido.getPrecioFinal());
-						reg.addPaquete(paqOfrecido);
 						ofertador.hacerCompra(paqOfrecido);
 					}
 				}
 			}
 
 			ofertador.procesarAtracciones(this.parque.getAll());
+
 			
 			for(Atraccion atrAOfrecer : ofertador.getAtraccionesAOfertar()) {
 				boolean vendido = this.ofrecerAtraccion(atrAOfrecer,sc);
 				String linea = "-".repeat(146);
 				System.out.println(linea);
 				if(vendido) {
-					reg.addHoras(atrAOfrecer.getDuracion());
-					reg.addPrecioTotal(atrAOfrecer.getPrecio());
-					reg.addAtraccion(atrAOfrecer);
 					ofertador.hacerCompra(atrAOfrecer);
 				}
 			}
 
-			registros.add(reg);
+			registros.add(ofertador.getCompra());
 			
 			ofertador.reiniciarOferta();
 		

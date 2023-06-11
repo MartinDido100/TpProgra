@@ -36,6 +36,12 @@ public class RegistroCompra {
 		}
 	}
 	
+	public void addAtracciones(ArrayList<Atraccion> atracciones) {
+		if(!this.atracciones.containsAll(atracciones)) {
+			this.atracciones.addAll(atracciones);			
+		}
+	}
+	
 	public ArrayList<Atraccion> getAtracciones() {
 		return atracciones;
 	}
@@ -47,6 +53,8 @@ public class RegistroCompra {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
+
+
 
 	@Override
 	public String toString() {

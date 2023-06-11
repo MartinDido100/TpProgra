@@ -66,10 +66,10 @@ public class OfertadorTests {
 		
 		assertEquals(esperado, ofertador.getPaquetesAOfertar());
 	}
+
 	
-	//
 	@Test
-	public void ordenDeOfertaAtraccionesPorPreferencia() {
+	public void compraDeUnaAtraccionNoSeaNuevamenteOfertada() {
 		Ofertador ofertador = new Ofertador();
 		
 		ofertador.setUsuario(this.listaUsuarios.get(1));
