@@ -39,7 +39,6 @@ public class OfertadorTests {
 		atrPaquete.add(this.atracciones.get(1));
 		atrPaquete.add(this.atracciones.get(2));
 		
-		//Nombre Atracciones Promocion
 		paquetes.add(new Paquete("Disney Cinema",atrPaquete,new PromocionPorcentual(0.4, 67)));
 		
 		atrPaquete.clear();
