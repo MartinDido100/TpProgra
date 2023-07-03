@@ -20,12 +20,12 @@ public class Ofertador {
 		this.compra.setUsuario(usuario);
 	}
 	
-	private boolean puedoVenderAtraccion(Atraccion atraccion) {
+	public boolean puedoVenderAtraccion(Atraccion atraccion) {
 		return this.usuario.getPresupuesto() >= atraccion.getPrecio() && this.usuario.getTiempo() >= atraccion.getDuracion()
 				&& atraccion.getCupos() > 0 && !this.compra.getAtracciones().contains(atraccion);
 	}
 	
-	private boolean puedoVenderPaquete(Paquete paq) {
+	public boolean puedoVenderPaquete(Paquete paq) {
 		return this.usuario.getPresupuesto() >= paq.getPrecioFinal() && this.usuario.getTiempo() >= paq.getHorasTotales()
 				&& paq.getCuposPaquete() > 0 && this.puedoOfertarPaquete(paq);
 	}
@@ -34,10 +34,10 @@ public class Ofertador {
 		return this.compra.getAtracciones().contains(atr);
 	}
 	
-	public boolean puedoOfertarPaquete(Paquete paq) {
+	private boolean puedoOfertarPaquete(Paquete paq) {
 		boolean cond = true;
 		for(Atraccion atr : paq.getAtracciones()) {
-			if(this.atraccionComprada(atr)) {
+			if(!this.puedoVenderAtraccion(atr)) {
 				cond = false;
 			}
 		}
@@ -88,17 +88,35 @@ public class Ofertador {
 	}
 	
 
-	public void hacerCompra(Paquete paq) {		
+	public void hacerCompra(Paquete paq,Atraccion atraccion){
+		if(paq != null){
+			this.usuario.hacerCompra(paq.getHorasTotales(), paq.getPrecioFinal());
+			this.compra.addPaquete(paq);
+
+			this.compra.addHoras(paq.getHorasTotales());
+			this.compra.addPrecioTotal(paq.getPrecioFinal());
+			
+			for(Atraccion atr : paq.getAtracciones()) {
+				atr.reducirCupos();
+			}
+		}else{
+			this.usuario.hacerCompra(atraccion.getDuracion(), atraccion.getPrecio());
+			this.compra.addAtraccion(atraccion);
+			this.compra.addHoras(atraccion.getDuracion());
+			this.compra.addPrecioTotal(atraccion.getPrecio());
+			atraccion.reducirCupos();
+		}
+	}
+	
+	/*public void hacerCompra(Paquete paq) {		
 		this.usuario.hacerCompra(paq.getHorasTotales(), paq.getPrecioFinal());
-		this.compra.addAtracciones(paq.getAtracciones());
-		
 		this.compra.addPaquete(paq);
+
 		this.compra.addHoras(paq.getHorasTotales());
 		this.compra.addPrecioTotal(paq.getPrecioFinal());
 		
 		for(Atraccion atr : paq.getAtracciones()) {
 			atr.reducirCupos();
-			
 		}
 		
 	}
@@ -109,7 +127,7 @@ public class Ofertador {
 		this.compra.addHoras(atraccion.getDuracion());
 		this.compra.addPrecioTotal(atraccion.getPrecio());
 		atraccion.reducirCupos();
-	}
+	}*/
 	
 	public void reiniciarOferta() {
 		this.paquetesAOfertar.clear();

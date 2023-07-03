@@ -97,7 +97,7 @@ public class OfertadorTests {
 		ofertador.procesarPaquetes(this.paquetes);
 		ofertador.procesarAtracciones(this.atracciones);
 
-		ofertador.hacerCompra(this.paquetes.get(0));
+		ofertador.hacerCompra(this.paquetes.get(0),null);
 		
 		ofertador.reiniciarOferta();
 		ofertador.setUsuario(this.listaUsuarios.get(1));
@@ -119,7 +119,7 @@ public class OfertadorTests {
 		
 		ofertador.procesarPaquetes(this.paquetes);
 
-		ofertador.hacerCompra(this.paquetes.get(0));
+		ofertador.hacerCompra(this.paquetes.get(0),null);
 		
 		ofertador.procesarAtracciones(this.atracciones);
 		

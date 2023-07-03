@@ -24,9 +24,7 @@ public class RegistroCompra {
 	public void addPaquete(Paquete paquete) {
 		this.paquetes.add(paquete);
 		for(Atraccion atr : paquete.getAtracciones()) {
-			if(!this.atracciones.contains(atr)) {
-				this.atracciones.add(atr);
-			}
+			this.addAtraccion(atr);
 		}
 	}
 	
@@ -36,11 +34,11 @@ public class RegistroCompra {
 		}
 	}
 	
-	public void addAtracciones(ArrayList<Atraccion> atracciones) {
+	/*public void addAtracciones(ArrayList<Atraccion> atracciones) {
 		if(!this.atracciones.containsAll(atracciones)) {
 			this.atracciones.addAll(atracciones);			
 		}
-	}
+	}*/
 	
 	public ArrayList<Atraccion> getAtracciones() {
 		return atracciones;

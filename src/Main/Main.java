@@ -10,8 +10,8 @@ public class Main {
 
 		Recepcion.bienvenida();
 		
-		String linea = "-".repeat(146);
-		System.out.println(linea);
+		//String linea = "-".repeat(146);
+		//System.out.println(linea);
 		
 		Archivo arch = new Archivo("Archivos/Usuarios.in");
 		ArrayList<Usuario> listaUsuarios = arch.leerUsuarios();
@@ -22,9 +22,7 @@ public class Main {
 		ArrayList<Paquete> listaPaquetes = arch.leerPaquetes(parque);
 		
 		Recepcion recep = new Recepcion(listaUsuarios,parque,listaPaquetes);
-		
-		arch.setNombre("Archivos/Registros.out");
-		arch.guardarRegistrosCompra(recep.recibir());
+		recep.recibir();
 		
 	}
 

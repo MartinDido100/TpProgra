@@ -60,8 +60,8 @@ public class TotalizadorItinerariosTests {
 		
 		ofertador.procesarPaquetes(this.paquetes);
 
-		ofertador.hacerCompra(this.paquetes.get(0));
-		ofertador.hacerCompra(this.paquetes.get(1));
+		ofertador.hacerCompra(this.paquetes.get(0),null);
+		ofertador.hacerCompra(this.paquetes.get(1),null);
 		
 		assertEquals(903.8,this.listaUsuarios.get(0).getPresupuesto(),0.001);
 	}
@@ -76,8 +76,8 @@ public class TotalizadorItinerariosTests {
 		
 		ofertador.procesarPaquetes(this.paquetes);
 
-		ofertador.hacerCompra(this.paquetes.get(0));
-		ofertador.hacerCompra(this.paquetes.get(1));
+		ofertador.hacerCompra(this.paquetes.get(0),null);
+		ofertador.hacerCompra(this.paquetes.get(1),null);
 		
 		assertEquals(984.5,this.listaUsuarios.get(0).getTiempo(),0.00001);
 	}

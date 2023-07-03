@@ -31,13 +31,13 @@ public class Recepcion {
 		String linea;
 		char rta;
 		do {
-			System.out.println("\nÂ¿Acepta la sugerencia? Ingrese S o N");
+			System.out.println("\n¿Acepta la sugerencia? Ingrese S o N");
 			linea = sc.next();
 			rta = linea.charAt(0);
 		}while((rta != 'S' || rta != 'N' || rta != 's' || rta != 'n') && linea.length() != 1);
 
 		if(rta == 'S' || rta == 's') {
-			System.out.println("Atraccion aceptada!");
+			System.out.println("Compra aceptada!");
 			return true;
 		}
 		return false;
@@ -65,15 +65,16 @@ public class Recepcion {
 		return this.preguntar(sc);
 	}
 	
-	public ArrayList<RegistroCompra> recibir() {
+	public void recibir() {
 		
 		Scanner sc = new Scanner(System.in);
 		
 		Ofertador ofertador = new Ofertador();
 		
-		ArrayList<RegistroCompra> registros = new ArrayList<>();
+		Archivo arch = new Archivo("Archivos/Registros.out");
 		
 		for(Usuario usuario : this.listaUsuarios) {
+			
 			
 			ofertador.setUsuario(usuario);
 			
@@ -82,29 +83,34 @@ public class Recepcion {
 			ofertador.procesarPaquetes(this.listaPaquetes);
 			
 			for(Paquete paqOfrecido : ofertador.getPaquetesAOfertar()) {
-				if(ofertador.puedoOfertarPaquete(paqOfrecido)) {
+				if(ofertador.puedoVenderPaquete(paqOfrecido)) {
+					System.out.println(usuario.getPresupuesto());
+
 					boolean vendido = this.ofrecerPaquete(paqOfrecido,sc);
-					String linea = "-".repeat(146);
-					System.out.println(linea);
 					if(vendido) {
-						ofertador.hacerCompra(paqOfrecido);
+						ofertador.hacerCompra(paqOfrecido,null);
 					}
 				}
 			}
 
 			ofertador.procesarAtracciones(this.parque.getAll());
 
+			System.out.println(ofertador.getAtraccionesAOfertar());
 			
 			for(Atraccion atrAOfrecer : ofertador.getAtraccionesAOfertar()) {
-				boolean vendido = this.ofrecerAtraccion(atrAOfrecer,sc);
-				String linea = "-".repeat(146);
-				System.out.println(linea);
-				if(vendido) {
-					ofertador.hacerCompra(atrAOfrecer);
+				if(ofertador.puedoVenderAtraccion(atrAOfrecer)){
+					System.out.println(usuario.getPresupuesto());
+					boolean vendido = this.ofrecerAtraccion(atrAOfrecer,sc);
+					//String linea = "-".repeat(146);
+					//System.out.println(linea);
+					
+					if(vendido) {
+						ofertador.hacerCompra(null,atrAOfrecer);
+					}
 				}
 			}
-
-			registros.add(ofertador.getCompra());
+			
+			arch.guardarRegistroCompra(ofertador.getCompra());
 			
 			ofertador.reiniciarOferta();
 		
@@ -115,13 +121,9 @@ public class Recepcion {
 					+ "+#+   +#+# +#+    +#+ +#+     +#+ +#+           +#+     +#+     +#+        +#+ \r\n"
 					+ "#+#    #+# #+#    #+# #+#     #+# #+#    #+#    #+#     #+#     #+# #+#    #+# \r\n"
 					+ " ########  ###    ### ###     ###  ######## ########### ###     ###  ########");
-			String linea = "-".repeat(146);
-			System.out.println(linea);
-			String enter = "\n".repeat(5);
-			System.out.print(enter);
+			
 		}
 		
 		sc.close();
-		return registros;
 	}
 }

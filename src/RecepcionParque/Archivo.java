@@ -57,6 +57,7 @@ public class Archivo {
 		return usuarios;
 	}
 	
+	
 	public ParqueAtracciones crearAtracciones() {
 		Scanner sc = null;
 		ParqueAtracciones p = null;
@@ -89,17 +90,15 @@ public class Archivo {
 	}
 	
 	
-	public void guardarRegistrosCompra(ArrayList<RegistroCompra> registros) {
+	public void guardarRegistroCompra(RegistroCompra registro) {
 	    FileWriter file = null;
 	    PrintWriter printerWriter = null;
 		  try {
-			  file = new FileWriter(path);
+			  file = new FileWriter(path,true);
 			  printerWriter = new PrintWriter(file);
 
-			  for(RegistroCompra reg : registros) {
-				  printerWriter.println(reg);
-				  printerWriter.println("--------------------------------------------");
-			  }
+			  printerWriter.println(registro);
+			  printerWriter.println();
 			  
 		    } catch (Exception e) {
 		        e.printStackTrace();
